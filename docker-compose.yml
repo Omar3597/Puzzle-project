@@ -1,0 +1,14 @@
+# Run the app:    docker compose up app
+# Run the tests:  docker compose run --rm test
+services:
+  app:
+    build: .
+    environment:
+      # Linux / WSLg: uses your own DISPLAY. Windows with VcXsrv / Mac with XQuartz: host.docker.internal:0
+      - DISPLAY=${DISPLAY:-host.docker.internal:0}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix   # lets the container draw on the Linux screen
+
+  test:
+    build: .
+    command: python test_puzzle.py
